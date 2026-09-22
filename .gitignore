@@ -5,6 +5,8 @@ node_modules/
 runtime-logs/
 .vault/
 builds/
+!backend/builds/
+!backend/builds/*.js
 apps/api/npm-install.*.log
 apps/api/node_modules/
 apps/api/dist/

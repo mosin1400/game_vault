@@ -8,12 +8,12 @@ function createStudioProxy({ port } = {}) {
     if (!req.url.startsWith('/api/')) { res.writeHead(404); res.end('Not found'); return; }
     const parsedBody = req.body === undefined ? null : Buffer.isBuffer(req.body) ? req.body : Buffer.from(JSON.stringify(req.body));
     const dashboardPort = Number.isInteger(port) ? port : resolveDashboardPort(req.headers);
-    const headers = { ...req.headers, host: `127.0.0.1:${dashboardPort}` };
+    const headers = { ...req.headers, host: `127.0.0.2:${dashboardPort}` };
     // Theia's Express JSON middleware may already have consumed the stream.
     // Forward the parsed body with its actual length instead of piping an empty
     // stream while retaining the old Content-Length (which hangs DELETE/POST).
     if (parsedBody) { headers['content-length'] = String(parsedBody.length); delete headers['transfer-encoding']; }
-    const upstream = http.request({ hostname: '127.0.0.1', port: dashboardPort, path: req.url, method: req.method, headers }, response => {
+    const upstream = http.request({ hostname: '127.0.0.2', port: dashboardPort, path: req.url, method: req.method, headers }, response => {
       res.writeHead(response.statusCode, response.headers); response.pipe(res);
     });
     upstream.setTimeout(180000, () => upstream.destroy(new Error('Studio API timeout')));

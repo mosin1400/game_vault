@@ -105,10 +105,6 @@ module.exports = (async () => {
         await load(container, require('@theia/output/lib/browser/output-frontend-module'));
         await load(container, require('@theia/userstorage/lib/browser/user-storage-frontend-module'));
         await load(container, require('@theia/preferences/lib/browser/preference-frontend-module'));
-        await load(container, require('../../gv-extension/theme-module'));
-        await load(container, require('../../gv-extension/language-module'));
-        await load(container, require('../../gv-extension/problems-module'));
-        await load(container, require('../../gv-extension/studio-module'));
         await load(container, require('@theia/scm/lib/browser/scm-frontend-module'));
         await load(container, require('@theia/scm-extra/lib/browser/scm-extra-frontend-module'));
         await load(container, require('@theia/search-in-workspace/lib/browser/search-in-workspace-frontend-module'));
@@ -128,6 +124,10 @@ module.exports = (async () => {
         await load(container, require('@theia/plugin-ext-vscode/lib/browser/plugin-vscode-frontend-module'));
         await load(container, require('@theia/vsx-registry/lib/common/vsx-registry-common-module'));
         await load(container, require('@theia/vsx-registry/lib/browser/vsx-registry-frontend-module'));
+        await load(container, require('game-vault-theia-extension/theme-module'));
+        await load(container, require('game-vault-theia-extension/language-module'));
+        await load(container, require('game-vault-theia-extension/problems-module'));
+        await load(container, require('game-vault-theia-extension/studio-module'));
         
         MonacoInit.init(container);
         ;

@@ -34,7 +34,7 @@ const { applyTheiaCors } = require("./backend/http/theia-cors");
 
 const ROOT = __dirname;
 const GAMES = path.join(ROOT, "games");
-const SKILLS = path.join(ROOT, "skills");
+const SKILLS = path.join(ROOT, "theia", "gv-extension", "skills");
 const VAULT = path.join(ROOT, ".vault");
 const USERS_FILE = path.join(VAULT, "users.json");
 const ADMIN_PROFILE_FILE = path.join(VAULT, "admin-profile.json");
@@ -75,7 +75,7 @@ loadEnvironmentFiles({
   enabled: process.env.GV_SKIP_ENV_FILE_LOADING !== "1",
 });
 const jsonHeaders = httpResponse.defaultJsonHeaders;
-const handleAgentMessage = createAgentHandler({ agentMemory, projectRoot, buildAgentContext, createAgentTools, runAgent, saveAction: action => agentActions.set(action.id, action), apiKey: process.env.OPENROUTER_API_KEY, model: process.env.OPENROUTER_MODEL, port: PORT });
+const handleAgentMessage = createAgentHandler({ agentMemory, projectRoot, buildAgentContext, createAgentTools, runAgent, saveAction: action => agentActions.set(action.id, action), apiKey: process.env.OPENROUTER_API_KEY, model: process.env.OPENROUTER_MODEL, port: PORT, skillsRoot: SKILLS });
 
 async function ensure() {
   await Promise.all([
@@ -498,6 +498,7 @@ async function api(req, res, url) {
     !["/api/games", "/api/skills", "/api/me", "/api/game-detail"].includes(
       url.pathname,
     ) &&
+    !url.pathname.startsWith("/api/skills/") &&
     !admin(req)
   )
     return send(res, 401, { error: "نیاز به ورود مدیر است" });
@@ -927,6 +928,29 @@ async function api(req, res, url) {
         );
     }
     return send(res, 200, { skills: list });
+  }
+  const skillMatch = url.pathname.match(/^\/api\/skills\/([A-Za-z0-9._-]+)$/);
+  if (req.method === "GET" && skillMatch) {
+    const id = skillMatch[1];
+    if (!safePart(id)) return send(res, 400, { error: "Skill معتبر نیست" });
+    const directory = path.join(SKILLS, id);
+    const metadata = await readJson(path.join(directory, "skill.json"), null);
+    if (!metadata) return send(res, 404, { error: "Skill پیدا نشد" });
+    let instructions = "";
+    try { instructions = await fsp.readFile(path.join(directory, "instructions.md"), "utf8"); } catch {}
+    return send(res, 200, { skill: { ...metadata, instructions, href: `/skills/${id}/instructions.md` } });
+  }
+  const skillInstructionsMatch = url.pathname.match(/^\/api\/skills\/([A-Za-z0-9._-]+)\/instructions$/);
+  if (req.method === "GET" && skillInstructionsMatch) {
+    const id = skillInstructionsMatch[1];
+    if (!safePart(id)) return send(res, 400, { error: "Skill معتبر نیست" });
+    try {
+      const instructions = await fsp.readFile(path.join(SKILLS, id, "instructions.md"), "utf8");
+      return send(res, 200, instructions, { "content-type": "text/markdown; charset=utf-8" });
+    } catch (error) {
+      if (error.code === "ENOENT") return send(res, 404, { error: "Skill پیدا نشد" });
+      throw error;
+    }
   }
   if (req.method === "GET" && url.pathname === "/api/download") {
     const root = projectRoot(

@@ -148,6 +148,10 @@ globalThis.extensionInfo = [
     {
         "name": "@theia/vsx-registry",
         "version": "1.74.0"
+    },
+    {
+        "name": "game-vault-theia-extension",
+        "version": "1.0.0"
     }
 ];
 

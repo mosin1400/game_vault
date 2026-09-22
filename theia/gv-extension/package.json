@@ -1,0 +1,12 @@
+{
+  "name": "game-vault-theia-extension",
+  "version": "1.0.0",
+  "private": true,
+  "theiaExtensions": [
+    { "frontend": "theme-module" },
+    { "frontend": "language-module" },
+    { "frontend": "problems-module" },
+    { "frontend": "studio-module" },
+    { "backend": "api-backend-module" }
+  ]
+}

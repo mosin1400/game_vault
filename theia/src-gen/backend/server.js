@@ -87,7 +87,7 @@ module.exports = async (port, host, argv) => {
         await load(require('@theia/plugin-ext-vscode/lib/node/plugin-vscode-backend-module'));
         await load(require('@theia/vsx-registry/lib/common/vsx-registry-common-module'));
         await load(require('@theia/vsx-registry/lib/node/vsx-registry-backend-module'));
-        await load(require('../../gv-extension/api-backend-module'));
+        await load(require('game-vault-theia-extension/api-backend-module'));
         startupLog('modules loaded');
         return await start(port, host, argv);
     } catch (error) {
