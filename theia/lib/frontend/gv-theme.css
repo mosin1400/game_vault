@@ -17,7 +17,7 @@ html[data-gv-theme-light="true"] .gv-native-agent .gv-action-card{background:#ff
 html[data-gv-theme-light="true"] .gv-native-agent .gv-task{color:#475569}
 html[data-gv-theme-light="true"] .gv-native-agent pre{background:#eef2f6;color:#17243a}
 .gv-native-agent.lm-mod-hidden,.gv-native-agent.p-mod-hidden,.gv-project-tools.lm-mod-hidden,.gv-project-tools.p-mod-hidden{display:none!important}
-.gv-native-agent{min-height:0;min-width:0!important;overflow:hidden;box-sizing:border-box}
+.gv-native-agent{min-height:0;min-width:280px!important;overflow:hidden;box-sizing:border-box}
 .gv-native-agent .gv-log{min-height:0;overflow-y:auto;overflow-wrap:anywhere}
 .gv-native-agent .gv-head,.gv-native-agent .gv-compose{flex-shrink:0}
 .gv-project-tools{height:100%;overflow:auto;box-sizing:border-box;min-width:0!important}
@@ -38,8 +38,17 @@ html[data-gv-theme-light="true"] .gv-native-agent textarea,html[data-gv-theme-li
 html[data-gv-theme-light="true"] .gv-native-agent textarea::placeholder{color:#61738a;opacity:1}
 html[data-gv-theme-light="true"] .gv-native-agent .gv-action-delta{color:#18703e}
 .gv-native-agent .gv-head{padding:11px 14px;font-size:12px;align-items:center;gap:8px}
+.gv-native-agent .gv-head{min-width:0;min-height:44px;box-sizing:border-box}
+.gv-native-agent .gv-head b{flex:0 0 auto;white-space:nowrap;font-size:12px}
+.gv-native-agent .gv-head small{display:none}
+.gv-native-agent .gv-head .gv-chat-context{flex:1;min-width:0;max-width:none;margin:0;direction:ltr;text-align:end;font-size:11px}
+.gv-native-agent .gv-head #gv-clear{flex:0 0 auto;cursor:pointer}
 .gv-native-agent .gv-head small{display:block;max-width:200px;overflow:hidden;text-overflow:ellipsis;color:var(--theia-descriptionForeground);font-weight:400}
 .gv-native-agent .gv-session-controls{align-items:center;padding:8px 12px;gap:6px;font-size:12px;background:transparent}
+.gv-native-agent .gv-session-controls{display:grid;grid-template-columns:minmax(0,1fr) repeat(4,30px);gap:5px;min-width:0;box-sizing:border-box}
+.gv-native-agent .gv-session-controls .gv-session-search{grid-column:1 / -1;width:100%}
+.gv-native-agent .gv-session-controls select{grid-column:1;min-width:0;width:100%;overflow:hidden;text-overflow:ellipsis}
+.gv-native-agent .gv-session-controls button{width:30px;min-width:0;padding:0;text-align:center}
 .gv-native-agent .gv-session-controls select{height:30px;padding:4px 8px;border-color:var(--theia-panel-border);border-radius:6px;max-width:none;background:var(--theia-sideBar-background);color:var(--theia-foreground)}
 .gv-native-agent .gv-session-search{min-width:0;width:72px;height:30px;box-sizing:border-box;border:1px solid var(--theia-panel-border);border-radius:6px;padding:4px 7px;background:var(--theia-sideBar-background);color:var(--theia-foreground);font:inherit;font-size:11px}
 .gv-native-agent .gv-session-controls button{height:30px;white-space:nowrap;border:0;background:transparent;color:var(--theia-foreground);padding:4px 7px;cursor:pointer}

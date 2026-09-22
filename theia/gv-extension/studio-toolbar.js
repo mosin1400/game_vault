@@ -1,4 +1,10 @@
 function mountStudioToolbar({ shell, project, apiFetch, API, DASHBOARD = API }) {
+  if (!document.querySelector('link[href$="gv-theme.css"]')) {
+    const stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = new URL('gv-theme.css', document.baseURI).href;
+    document.head.appendChild(stylesheet);
+  }
   if (document.getElementById('gv-studio-toolbar')) return;
   const bar = document.createElement('div'), p = project();
   bar.id = 'gv-studio-toolbar';
